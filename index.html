@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --stardew-brown: #733e39;
+            --stardew-beige: #f4d29c;
+            --stardew-border: #3e2731;
+            --gate-wood: #a05851;
+        }
+
+        body {
+            background-color: #1a1a2e;
+            font-family: 'Press Start 2P', cursive;
+            margin: 0;
+            overflow: hidden; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        #gate-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            display: flex;
+        }
+
+        .gate-door {
+            width: 50%;
+            height: 100%;
+            background-color: var(--gate-wood);
+            border: 10px solid var(--stardew-border);
+            display: flex;
+            align-items: center;
+            position: relative;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-image: 
+                linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px);
+            background-size: 40px 100%; /* Makes it look like wooden planks */
+        }
+
+        .gate-left { justify-content: flex-end; border-right: 5px solid var(--stardew-border); }
+        .gate-right { justify-content: flex-start; border-left: 5px solid var(--stardew-border); }
+
+        #open-btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 101;
+            padding: 20px;
+            font-family: 'Press Start 2P', cursive;
+            background: var(--stardew-beige);
+            border: 4px solid var(--stardew-border);
+            cursor: pointer;
+            color: var(--stardew-brown);
+            font-size: 14px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+
+        .open-left { transform: translateX(-100%); }
+        .open-right { transform: translateX(100%); }
+
+        #main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+        .container {
+            background-color: var(--stardew-beige);
+            border: 6px solid var(--stardew-border);
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 8px 8px 0px rgba(0,0,0,0.4);
+        }
+
+        h1 { color: var(--stardew-brown); font-size: 16px; margin-bottom: 15px; }
+
+        .slideshow-container {
+            width: 100%;
+            height: 300px;
+            border: 4px solid var(--stardew-brown);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .mySlides {
+            display: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .apology-text {
+            color: #4a2d2a;
+            font-size: 11px;
+            line-height: 1.8;
+            min-height: 80px;
+        }
+
+        .pixel-heart {
+            color: #e74c3c;
+            font-size: 40px;
+            margin-bottom: 10px;
+            animation: beat 1s infinite alternate;
+        }
+
+        @keyframes beat {
+            to { transform: scale(1.1); }
+        }
+
+        .fade {
+            animation-name: fade;
+            animation-duration: 2s; 
+        }
+        @keyframes fade {
+            from {opacity: 0.2} to {opacity: 1}
+        }
+    </style>
+</head>
+<body>
+
+    <div id="gate-container">
+        <div class="gate-door gate-left" id="door-l"></div>
+        <button id="open-btn" onclick="openGate()">Open if you love me</button>
+        <div class="gate-door gate-right" id="door-r"></div>
+    </div>
+
+    <div id="main-content">
+        <div class="pixel-heart">❤️</div>
+        
+        <div class="container">
+            <h1>I'm Sorry... ❤️</h1>
+            
+            <div class="slideshow-container">
+                <img class="mySlides fade" src="images/photo1.jpg">
+                <img class="mySlides fade" src="images/photo2.jpg">
+                <img class="mySlides fade" src="images/photo3.jpg">
+                <img class="mySlides fade" src="images/photo4.jpg">
+                <img class="mySlides fade" src="images/photo5.jpg">
+                <img class="mySlides fade" src="images/photo6.jpg">
+                <img class="mySlides fade" src="images/photo7.jpg">
+                <img class="mySlides fade" src="images/photo8.jpg">
+                <img class="mySlides fade" src="images/photo9.jpg">
+                <img class="mySlides fade" src="images/photo10.jpg">
+
+            </div>
+
+            <div id="typewriter" class="apology-text"></div>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="music/We The Kings - She (AUDIO).mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const message = "I messed up, and I feel terrible about it. You mean the world to me, and I hate that I hurt you. I really hope this can help in making it up to you. And i promise to do better. please forgive me? ❤️";
+        let index = 0;
+        let slideIndex = 0;
+        const music = document.getElementById("bgMusic");
+
+        function openGate() {
+            document.getElementById('door-l').classList.add('open-left');
+            document.getElementById('door-r').classList.add('open-right');
+            document.getElementById('open-btn').style.display = 'none';
+            
+            const mainContent = document.getElementById('main-content');
+            mainContent.style.opacity = '1';
+            document.body.style.overflow = 'auto';
+
+            music.play();
+            showSlides();
+            typeWriter();
+        }
+
+        function typeWriter() {
+            if (index < message.length) {
+                document.getElementById("typewriter").innerHTML += message.charAt(index);
+                index++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].style.display = "block";  
+            
+            setTimeout(showSlides, 4000); 
+        }
+    </script>
+</body>
+</html>
